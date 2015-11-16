@@ -27,7 +27,7 @@ func TestNo(t *testing.T) {
 	}
 
 	s = "209.15"
-	f := ToF64(s, 2, RoundingAuto)
+	f := ToF64(s, 1, RoundingAuto)
 	if f != 209.20 {
 		t.Errorf("Format %s to float fail, got %f", s, f)
 	}
