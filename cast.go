@@ -103,6 +103,14 @@ func Date2String(t time.Time, dateFormat string) string {
 		dateFormat = strings.Replace(dateFormat, dateOrder[k], dateMap[dateOrder[k]], -1)
 	}
 
+	if strings.Contains(dateFormat, "H") {
+		if t.Hour() < 10 {
+			dateFormat = strings.Replace(dateFormat, "H", "3", -1)
+		} else {
+			dateFormat = strings.Replace(dateFormat, "H", "15", -1)
+		}
+	}
+
 	return t.Format(dateFormat)
 }
 
