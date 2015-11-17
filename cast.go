@@ -66,27 +66,11 @@ MST	T = Timezone
 
 func Date2String(t time.Time, dateFormat string) string {
 
-	var dateMap = map[string]string{
-		"dd":   "02",
-		"d":    "2",
-		"MMMM": "January",
-		"MMM":  "Jan",
-		"MM":   "01",
-		"M":    "1",
-		"YYYY": "2006",
-		"YY":   "06",
-		"hh":   "03",
-		"h":    "3",
-		"HH":   "15",
-		"mm":   "04",
-		"m":    "4",
-		"ss":   "05",
-		"s":    "5",
-		"A":    "PM",
-		"T":    "MST",
+	var dateMap = map[string]string{"dd": "02", "d": "2", "MMMM": "January", "MMM": "Jan", "MM": "01", "M": "1",
+		"YYYY": "2006", "YY": "06", "hh": "03", "h": "3", "HH": "15", "mm": "04", "m": "4", "ss": "05", "s": "5",
+		"A": "PM", "T": "MST",
 	}
-	// "H":    "",
-	// "L":  "",
+	// "H":    ""
 
 	var dateOrder = map[int]string{1: "dd", 2: "d", 3: "MMMM", 4: "MMM", 5: "MM", 6: "M", 7: "YYYY", 8: "YY",
 		9: "hh", 10: "h", 11: "HH", 12: "mm", 13: "m", 14: "ss", 15: "s", 16: "A", 17: "T",
