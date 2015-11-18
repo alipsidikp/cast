@@ -64,13 +64,15 @@ MST	T = Timezone
 	L = Location
 */
 
-func Date2String(t time.Time, dateFormat string) string {
+func getFormatDate(o interface{}, dateFormat string) string {
+
+	k := Kind(o)
+	//	v := Value(o)
 
 	var dateMap = map[string]string{"dd": "02", "d": "2", "MMMM": "January", "MMM": "Jan", "MM": "01", "M": "1",
 		"YYYY": "2006", "YY": "06", "hh": "03", "h": "3", "HH": "15", "mm": "04", "m": "4", "ss": "05", "s": "5",
 		"A": "PM", "T": "MST",
 	}
-	// "H":    ""
 
 	var dateOrder = map[int]string{1: "dd", 2: "d", 3: "MMMM", 4: "MMM", 5: "MM", 6: "M", 7: "YYYY", 8: "YY",
 		9: "hh", 10: "h", 11: "HH", 12: "mm", 13: "m", 14: "ss", 15: "s", 16: "A", 17: "T",
@@ -88,14 +90,31 @@ func Date2String(t time.Time, dateFormat string) string {
 	}
 
 	if strings.Contains(dateFormat, "H") {
-		if t.Hour() < 10 {
-			dateFormat = strings.Replace(dateFormat, "H", "3", -1)
-		} else {
+		if k == reflect.String {
+
 			dateFormat = strings.Replace(dateFormat, "H", "15", -1)
+		} else {
+			if o.(time.Time).Hour() < 10 {
+				dateFormat = strings.Replace(dateFormat, "H", "3", -1)
+			} else {
+				dateFormat = strings.Replace(dateFormat, "H", "15", -1)
+			}
 		}
 	}
 
+	return dateFormat
+
+}
+
+func Date2String(t time.Time, dateFormat string) string {
+	dateFormat = getFormatDate(t, dateFormat)
 	return t.Format(dateFormat)
+}
+
+func String2Date(dateString string, dateFormat string) time.Time {
+	dateFormat = getFormatDate(dateString, dateFormat)
+	t, _ := time.Parse(dateFormat, dateString)
+	return t
 }
 
 func ToInt(o interface{}, rounding string) int {

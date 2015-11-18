@@ -75,7 +75,7 @@ func TestDateString(t *testing.T) {
 func TestString2Date(t *testing.T) {
 	want := time.Date(2008, 6, 1, 0, 0, 0, 0, time.UTC)
 	s := "1-Jun-2008"
-	d := String2Date(s, "")
+	d := String2Date(s, "d-MMM-yyyy")
 	if d != want {
 		t.Errorf("Format date %s fail want %v got %v", s, want, d)
 	}
@@ -85,4 +85,35 @@ func TestString2Date(t *testing.T) {
 	if d != want {
 		t.Errorf("Format date %s fail want %v got %v", s, want, d)
 	}
+
+	want = time.Date(1980, 6, 2, 15, 15, 0, 0, time.UTC)
+	// fmt.Println(want)
+	s = "Jun 02, 1980 03:15PM"
+	d = String2Date(s, "MMM dd, yyyy hh:mmA")
+	if d != want {
+		t.Errorf("Format date %s fail want %v got %v", s, want, d)
+	}
+	// fmt.Println(d)
+
+	s = "Jun 02, 1980 15:15"
+	d = String2Date(s, "MMM dd, yyyy H:mm")
+	if d != want {
+		t.Errorf("Format date %s fail want %v got %v", s, want, d)
+	}
+	// fmt.Println(d)
+
+	want = time.Date(1980, 6, 2, 5, 15, 0, 0, time.UTC)
+	// fmt.Println(want)
+	s = "Jun 02, 1980 5:15"
+	d = String2Date(s, "MMM dd, yyyy H:mm")
+	if d != want {
+		t.Errorf("Format date %s fail want %v got %v", s, want, d)
+	}
+	// fmt.Println(d)
+	s = "Jun 02, 1980 05:15"
+	d = String2Date(s, "MMM dd, yyyy HH:mm")
+	if d != want {
+		t.Errorf("Format date %s fail want %v got %v", s, want, d)
+	}
+	// fmt.Println(d)
 }
