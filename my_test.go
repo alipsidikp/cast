@@ -70,5 +70,19 @@ func TestDateString(t *testing.T) {
 	if s != "07-Mar-15 19:6:39" {
 		t.Errorf("Format date %v to string fail. got %s", d, s)
 	}
+}
 
+func TestString2Date(t *testing.T) {
+	want := time.Date(2008, 6, 1, 0, 0, 0, 0, time.UTC)
+	s := "1-Jun-2008"
+	d := String2Date(s, "")
+	if d != want {
+		t.Errorf("Format date %s fail want %v got %v", s, want, d)
+	}
+
+	s = "1-6-2008"
+	d = String2Date(s, "d-M-yyyy")
+	if d != want {
+		t.Errorf("Format date %s fail want %v got %v", s, want, d)
+	}
 }
