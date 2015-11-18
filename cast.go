@@ -41,33 +41,30 @@ func ToString(o interface{}) string {
 	}
 }
 
-/*
-DateFormat legend:
-2		d = date
-02		dd = date 2 digit
-1		M = month
-01		MM = month 2 digit
-Jan		MMM = month in name, 3 chars
-January	MMMM = month in name, full
-06		YY = Year 2 digit
-2006	YYYY = Year 4 digit
-3	h = hour
-03	hh = hour 2 digit
-	H = hour in 24 cycle
-15	HH = hour in 24 cycle 2 digit
-4	m = minute
-04	mm = minute 2 digits
-5	s = Second
-05	ss = second 2 digit
-PM	A = AMPM
-MST	T = Timezone
-	L = Location
-*/
+/*===============================
+== LEGEND ========================
+=================================
+d 			= date
+dd 			= date 2 digit
+M 			= month
+MM 			= month 2 digit
+MMM 		= month in name, 3 chars
+MMMM 		= month in name, full
+YY 			= Year 2 digit
+YYYY 		= Year 4 digit
+h 			= hour
+hh 			= hour 2 digit
+H 			= hour in 24 cycle
+HH 			= hour in 24 cycle 2 digit
+m 			= minute
+mm 			= minute 2 digits
+s 			= Second
+ss 			= second 2 digit
+A 			= AMPM
+T 			= Timezone
+=================================*/
 
 func getFormatDate(o interface{}, dateFormat string) string {
-
-	k := Kind(o)
-	//	v := Value(o)
 
 	var dateMap = map[string]string{"dd": "02", "d": "2", "MMMM": "January", "MMM": "Jan", "MM": "01", "M": "1",
 		"YYYY": "2006", "YY": "06", "hh": "03", "h": "3", "HH": "15", "mm": "04", "m": "4", "ss": "05", "s": "5",
@@ -90,7 +87,7 @@ func getFormatDate(o interface{}, dateFormat string) string {
 	}
 
 	if strings.Contains(dateFormat, "H") {
-		if k == reflect.String {
+		if Value(o).Kind() == reflect.String {
 
 			dateFormat = strings.Replace(dateFormat, "H", "15", -1)
 		} else {
