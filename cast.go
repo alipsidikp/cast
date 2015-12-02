@@ -82,6 +82,7 @@ func getFormatDate(o interface{}, dateFormat string) string {
 	sort.Ints(keys)
 
 	dateFormat = strings.Replace(dateFormat, "y", "Y", -1)
+	dateFormat = strings.Replace(dateFormat, "D", "d", -1)
 	for _, k := range keys {
 		dateFormat = strings.Replace(dateFormat, dateOrder[k], dateMap[dateOrder[k]], -1)
 	}
