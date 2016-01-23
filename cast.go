@@ -103,12 +103,31 @@ func getFormatDate(o interface{}, dateFormat string) string {
 
 }
 
+var _defaultDateFormat string
+
+func SetDefaultDateFormat(f string) {
+	_defaultDateFormat = f
+}
+
+func DefaultDateFormat() string {
+	if _defaultDateFormat == "" {
+		_defaultDateFormat = "dd-MMM-yyyy"
+	}
+	return _defaultDateFormat
+}
+
 func Date2String(t time.Time, dateFormat string) string {
+	if dateFormat == "" {
+		dateFormat = DefaultDateFormat()
+	}
 	dateFormat = getFormatDate(t, dateFormat)
 	return t.Format(dateFormat)
 }
 
 func String2Date(dateString string, dateFormat string) time.Time {
+	if dateFormat == "" {
+		dateFormat = DefaultDateFormat()
+	}
 	dateFormat = getFormatDate(dateString, dateFormat)
 	t, _ := time.Parse(dateFormat, dateString)
 	return t
@@ -222,7 +241,17 @@ func RoundingUp64(f float64, decimalPoint int) (retValue float64) {
 	return
 }
 
-func ToDate(o interface{}) time.Time {
+func ToDate(o interface{}, formatDate string) time.Time {
+	v := reflect.Indirect(reflect.ValueOf(o))
+	t := strings.ToLower(v.Type().String())
+	if strings.Contains(t, "int") {
+		intDate := v.Int()
+		return time.Unix(intDate, 0)
+	} else if strings.Contains(t, "string") {
+		return String2Date(o.(string), formatDate)
+	} else if strings.HasSuffix(t, "time.time") {
+		return o.(time.Time)
+	}
 	return time.Now()
 }
 
