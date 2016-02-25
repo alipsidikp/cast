@@ -33,9 +33,9 @@ func ToString(o interface{}) string {
 		return o.(string)
 	} else if k == reflect.Int || k == reflect.Int8 ||
 		k == reflect.Int16 || k == reflect.Int32 || k == reflect.Int64 {
-		return fmt.Sprintf("%d", o)
+		return fmt.Sprintf("%v", o)
 	} else if k == reflect.Float32 || k == reflect.Float64 {
-		return fmt.Sprintf("%f", o)
+		return fmt.Sprintf("%v", o)
 	} else {
 		return ""
 	}
